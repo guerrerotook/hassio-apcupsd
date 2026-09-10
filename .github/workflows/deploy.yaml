@@ -58,7 +58,6 @@ jobs:
       fail-fast: false
       matrix:
         addon:
-          - apcupsd
           - apcupsd_net
     steps:
       - name: ⤵️ Check out code from GitHub
