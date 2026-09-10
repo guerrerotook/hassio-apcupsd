@@ -25,6 +25,7 @@ jobs:
     outputs:
       environment: ${{ steps.release.outputs.environment }}
       release_version: ${{ steps.release.outputs.release_version }}
+      is_prerelease: ${{ steps.release.outputs.is_prerelease }}
     steps:
       - name: ℹ️ Gather environment and release version
         id: release
@@ -35,17 +36,20 @@ jobs:
         run: |
           environment="edge"
           release_version=""
+          is_prerelease="false"
           if [[ "${EVENT_NAME}" = "release" ]]; then
             release_version="${TAG_NAME,,}"
             release_version="${release_version#v}"
             environment="stable"
             if [[ "${IS_PRERELEASE}" = "true" ]]; then
               environment="beta"
+              is_prerelease="true"
             fi
           fi
 
           echo "environment=${environment}" >> "$GITHUB_OUTPUT"
           echo "release_version=${release_version}" >> "$GITHUB_OUTPUT"
+          echo "is_prerelease=${is_prerelease}" >> "$GITHUB_OUTPUT"
 
   deploy:
     name: 👷 Build & Deploy ${{ matrix.addon }}
@@ -123,3 +127,53 @@ jobs:
             BUILD_REPOSITORY=${{ github.repository }}
             BUILD_VERSION=${{ steps.version.outputs.version }}
 
+  sync-version:
+    name: 🔄 Sync add-on version with release
+    needs:
+      - information
+      - deploy
+    if: >-
+      github.event_name == 'release'
+      && needs.information.outputs.is_prerelease == 'false'
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        # zizmor: ignore[artipacked] - credentials are needed to push the bump
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          ref: master
+      - name: ✏️ Update add-on versions
+        env:
+          RELEASE_VERSION: ${{ needs.information.outputs.release_version }}
+        run: |
+          if [[ ! "${RELEASE_VERSION}" =~ ^[0-9A-Za-z][0-9A-Za-z._-]*$ ]]; then
+            echo "::error::Invalid release version: ${RELEASE_VERSION}"
+            exit 1
+          fi
+
+          for addon in apcupsd_net; do
+            config="${addon}/config.yaml"
+            sed -i -E \
+              "s|^version:.*$|version: \"${RELEASE_VERSION}\"|" "${config}"
+            if ! grep -q "^version: \"${RELEASE_VERSION}\"$" "${config}"; then
+              echo "::error file=${config}::Failed to set version in ${config}"
+              exit 1
+            fi
+          done
+      - name: 🚀 Commit and push
+        env:
+          RELEASE_VERSION: ${{ needs.information.outputs.release_version }}
+        run: |
+          if git diff --quiet; then
+            echo "Add-on versions already up to date, nothing to commit."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit --all --message \
+            "⬆️ Bump add-on version to ${RELEASE_VERSION}"
+          git push origin HEAD:master
