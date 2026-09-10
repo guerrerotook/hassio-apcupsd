@@ -5,7 +5,7 @@
     "description": "View information from APC USB UPSs",
     "url": "https://github.com/guerrerotook/hassio-apcupsd/tree/master/apcupsd",
     "image": "ghcr.io/guerrerotook/apcupsd",
-    "arch": ["armhf", "armv7", "aarch64", "i386", "amd64"],
+    "arch": ["amd64"],
     "startup": "services",
     "boot": "auto",
     "hassio_api": true,

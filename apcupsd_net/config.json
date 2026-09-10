@@ -5,7 +5,7 @@
     "description": "View information from APC Network UPSs",
     "url": "https://github.com/guerrerotook/hassio-apcupsd/tree/master/apcupsd_net",
     "image": "ghcr.io/guerrerotook/apcupsd_net",
-    "arch": ["armhf", "armv7", "aarch64", "i386", "amd64"],
+    "arch": ["amd64"],
     "startup": "services",
     "boot": "auto",
     "hassio_api": true,

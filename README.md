@@ -56,7 +56,7 @@ The add-on images are built by GitHub Actions and published to this repository o
 
 Every push to `master` publishes the `edge` tag plus a tag matching the `version` in the add-on `config.json`.
 Publishing a GitHub release publishes the release version (without a leading `v`) and the `stable` (or `beta` for pre-releases) tag.
-Each version is a multi-arch manifest covering all architectures listed in the add-on `config.json`.
+Images are built for `linux/amd64` only.
 
 The packages are created as private packages the first time the pipeline runs. Set their visibility to public in the GitHub package settings so Home Assistant can pull them.
 
