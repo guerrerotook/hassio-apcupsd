@@ -6,7 +6,7 @@ This version of the add-on is for network UPSs.
 
 # Installation
 
-See the actual [repository](https://github.com/korylprince/hassio-apcupsd/) for installation instructions.
+See the actual [repository](https://github.com/guerrerotook/hassio-apcupsd/) for installation instructions.
 
 # Configuration
 
