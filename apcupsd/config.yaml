@@ -1,0 +1,33 @@
+---
+name: APC UPS Daemon
+version: "1.9"
+slug: apcupsd
+description: View information from APC USB UPSs
+url: https://github.com/guerrerotook/hassio-apcupsd/tree/master/apcupsd
+image: ghcr.io/guerrerotook/apcupsd
+arch:
+  - amd64
+startup: services
+boot: auto
+hassio_api: true
+hassio_role: manager
+map:
+  - share
+devices:
+  - /dev/usb/:/dev/usb/:rwm
+options:
+  name: APC UPS
+  cable: usb
+  type: usb
+  device: ""
+  extra: []
+schema:
+  name: str
+  cable: str
+  type: str
+  device: str
+  extra:
+    - key: str
+      val: str
+ports:
+  3551/tcp: 3551
