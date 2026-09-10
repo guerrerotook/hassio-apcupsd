@@ -31,7 +31,7 @@ You can then add the [NUT Integration](https://www.home-assistant.io/integration
 
 # About
 
-This repository contains just one add-on, an unofficial [apcupsd add-on](https://github.com/guerrerotook/hassio-apcupsd/tree/master/apcupsd).
+This repository contains just one add-on, an unofficial [apcupsd_net add-on](https://github.com/guerrerotook/hassio-apcupsd/tree/master/apcupsd_net).
 
 # Installation
 
@@ -41,24 +41,23 @@ Add this repository to your [Hass.io](https://home-assistant.io/hassio/) instanc
 
 If you have trouble you can follow the [official docs](https://home-assistant.io/hassio/installing_third_party_addons/).
 
-Then install the "APC UPS Daemon" add-on.
+Then install the "APC UPS Daemon (No USB)" add-on.
 
 # Configuration
 
-See the [apcupsd add-on](https://github.com/guerrerotook/hassio-apcupsd/tree/master/apcupsd) itself for information on configuring it.
+See the [apcupsd_net add-on](https://github.com/guerrerotook/hassio-apcupsd/tree/master/apcupsd_net) itself for information on configuring it.
 
 # Docker images
 
-The add-on images are built by GitHub Actions and published to this repository owner's GitHub Container Registry:
+The add-on image is built by GitHub Actions and published to this repository owner's GitHub Container Registry:
 
-* `ghcr.io/guerrerotook/apcupsd`
 * `ghcr.io/guerrerotook/apcupsd_net`
 
 Every push to `master` publishes the `edge` tag plus a tag matching the `version` in the add-on `config.yaml`.
 Publishing a GitHub release publishes the release version (without a leading `v`) and the `stable` (or `beta` for pre-releases) tag.
 Images are built for `linux/amd64` only.
 
-The packages are created as private packages the first time the pipeline runs. Set their visibility to public in the GitHub package settings so Home Assistant can pull them.
+The package is created as a private package the first time the pipeline runs. Set its visibility to public in the GitHub package settings so Home Assistant can pull it.
 
 # Issues
 
