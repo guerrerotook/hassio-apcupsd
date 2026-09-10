@@ -54,7 +54,7 @@ The add-on images are built by GitHub Actions and published to this repository o
 * `ghcr.io/guerrerotook/apcupsd`
 * `ghcr.io/guerrerotook/apcupsd_net`
 
-Every push to `master` publishes the `edge` tag plus a tag matching the `version` in the add-on `config.json`.
+Every push to `master` publishes the `edge` tag plus a tag matching the `version` in the add-on `config.yaml`.
 Publishing a GitHub release publishes the release version (without a leading `v`) and the `stable` (or `beta` for pre-releases) tag.
 Images are built for `linux/amd64` only.
 
