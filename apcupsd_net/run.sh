@@ -34,7 +34,7 @@ IFS=$'\n'
 keys=($keys)
 
 for key in "${keys[@]}"; do
-    val=`jq --raw-output "(.extra // [])[] | select(.key == \"$key\").val" $CONFIG_PATH`
+    val=`jq --raw-output --arg key "$key" '(.extra // [])[] | select(.key == $key).val' $CONFIG_PATH`
 
     if [ ! -z "$val" ]; then
         if grep -xq "#\?$key\( .*\)\?" $UPS_CONFIG_PATH; then
