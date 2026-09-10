@@ -36,7 +36,7 @@ For help with configuring apcupsd itself, see the [manual](http://www.apcupsd.co
 
 # Host Control
 
-This add-on communicates with the Hass.io API to reboot or poweroff the host (e.g. Raspberry Pi) just like if `apcupsd` was running on the host. It does this by replacing `/sbin/reboot` and `/sbin/poweroff` with scripts that talk to the Hass.io API. To prevent your host from powering off when your battery gets low, see the Advanced Configuration section below.
+This add-on communicates with the Hass.io API to reboot the host (e.g. Raspberry Pi) just like if `apcupsd` was running on the host. It does this by replacing `/sbin/reboot` with a script that talks to the Hass.io API. The add-on can no longer power off the host.
 
 # Home Assistant Configuration
 
@@ -63,7 +63,7 @@ For example, if you'd like to run a script on the `commfailure` event, create a 
 
 * `apcupsd` provides scripts for the following events: `commfailure`, `offbattery`, `changeme`, `commok`, `onbattery`. If you provide your own script, it will override the one `apcupsd` provides.
 * `curl` and `openssh` are provided for use in scripts. If there is another program you'd like to be included in the image, create an Issue and I'll consider adding it.
-* Even if you override an event script, `acpupsd` still runs additional actions on certain events, e.g. `doreboot` and `doshutdown` still reboot or poweroff the host. If you'd like to prevent that action from happening, `exit 99` in your script. See the [guide](http://www.apcupsd.com/manual/manual.html#customizing-event-handling) for more information.
+* Even if you override an event script, `acpupsd` still runs additional actions on certain events, e.g. `doreboot` still reboots the host. If you'd like to prevent that action from happening, `exit 99` in your script. See the [guide](http://www.apcupsd.com/manual/manual.html#customizing-event-handling) for more information.
 
 ### Email Setup
 
