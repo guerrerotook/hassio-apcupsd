@@ -6,10 +6,10 @@ UPS_CONFIG_PATH=/etc/apcupsd/apcupsd.conf
 
 VALID_SCRIPTS=(annoyme changeme commfailure commok doreboot doshutdown emergency failing loadlimit powerout onbattery offbattery mainsback remotedown runlimit timeout startselftest endselftest battdetach battattach)
 
-NAME=$(jq --raw-output ".name" $CONFIG_PATH)
-CABLE=$(jq --raw-output ".cable" $CONFIG_PATH)
-TYPE=$(jq --raw-output ".type" $CONFIG_PATH)
-DEVICE=$(jq --raw-output ".device" $CONFIG_PATH)
+NAME=$(jq --raw-output '.name // ""' $CONFIG_PATH)
+CABLE=$(jq --raw-output '.cable // ""' $CONFIG_PATH)
+TYPE=$(jq --raw-output '.type // ""' $CONFIG_PATH)
+DEVICE=$(jq --raw-output '.device // ""' $CONFIG_PATH)
 
 if [[ ! -z "$NAME" ]]; then
     sed -i "s/^#\?UPSNAME\( .*\)\?\$/UPSNAME $NAME/g" $UPS_CONFIG_PATH
@@ -29,12 +29,12 @@ else
     sed -i "s/^#\?DEVICE\( .*\)\?\$//g" $UPS_CONFIG_PATH
 fi
 
-keys=`jq --raw-output ".extra[].key" $CONFIG_PATH`
+keys=`jq --raw-output '(.extra // [])[].key' $CONFIG_PATH`
 IFS=$'\n'
 keys=($keys)
 
 for key in "${keys[@]}"; do
-    val=`jq --raw-output ".extra[] | select(.key == \"$key\").val" $CONFIG_PATH`
+    val=`jq --raw-output "(.extra // [])[] | select(.key == \"$key\").val" $CONFIG_PATH`
 
     if [ ! -z "$val" ]; then
         if grep -xq "#\?$key\( .*\)\?" $UPS_CONFIG_PATH; then
