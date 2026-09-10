@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+### Removed
+- Removed the Hass.io API based host poweroff command; `/sbin/poweroff` is no longer replaced, so the add-on can no longer shut down the host
+
 ## [1.9] - 2019-06-02
 ### Updated
 - Updated base image to latest version (based on Alpine 3.10)
