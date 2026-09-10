@@ -9,6 +9,7 @@ arch:
   - amd64
 startup: services
 boot: auto
+init: false
 hassio_api: true
 hassio_role: manager
 map:

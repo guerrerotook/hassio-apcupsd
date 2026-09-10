@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Fixed
+- Added `init: false` to the add-on config so the s6-overlay `/init` entrypoint runs as PID 1, fixing `s6-overlay-suexec: fatal: can only run as pid 1` on start-up
+
 ### Removed
 - Removed the Hass.io API based host poweroff command; `/sbin/poweroff` is no longer replaced, so the add-on can no longer shut down the host
 
