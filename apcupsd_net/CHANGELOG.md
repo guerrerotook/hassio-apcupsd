@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 ### Fixed
+- Fixed the add-on exiting immediately (add-on shown as "not running") when the
+  `extra` option, or any other option, is missing from the stored add-on options
 - Added `init: false` to the add-on config so the s6-overlay `/init` entrypoint runs as PID 1, fixing `s6-overlay-suexec: fatal: can only run as pid 1` on start-up
 
 ### Removed
